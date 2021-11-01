@@ -43,19 +43,25 @@ export default class ShoppingCart extends Component {
             </div>
         );
     }
-    handlerIncrement = (product) => {
+    handlerIncrement = (product, maxValue) => {
         const products = [...this.state.products];
         const index = products.indexOf(product);
-        products[index].quantity ++;
+        if(products[index].quantity < maxValue){
+            products[index].quantity ++;
         this.setState({ products: products });
+        }
+        
     };
     
-    handlerDecrement = (product) => {
+    handlerDecrement = (product, minValue) => {
         
         const products = [...this.state.products];
         const index = products.indexOf(product);
-        products[index].quantity--;
-        this.setState({ products: products });
+        if (products[index].quantity > 0) {
+            products[index].quantity --;
+            this.setState({ products: products });
+        }
+        
     }
     
 }
