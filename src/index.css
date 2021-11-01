@@ -6,3 +6,6 @@
     background-color: rgb(23, 23, 53) !important;
 }
 
+.delete-icon{
+    cursor: pointer;
+}
