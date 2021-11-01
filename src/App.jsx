@@ -9,7 +9,7 @@ export default class App extends Component {
             <>
                 <NavBar />
 
-                <ShoppingCart />
+                <ShoppingCart x="10"/>
             </>
         );
     }

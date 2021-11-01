@@ -3,7 +3,10 @@ import react, { Component } from "react";
 import Products from "./Products";
 
 export default class ShoppingCart extends Component {
-    state = {
+    constructor(props) {
+        console.log("constructor-shoppingCart");
+        super(props);
+        this.state = {
         products: [
             { id: 1, name: "Product 1", price: 100, quantity: 0 },
             { id: 2, name: "Product 2", price: 200, quantity: 0 },
@@ -17,8 +20,11 @@ export default class ShoppingCart extends Component {
             { id: 10, name: "Product 10", price: 1000, quantity: 0 },
         ],
     };
+    }
+    
 
     render() {
+        console.log("render-shoppingCart");
         return (
             <div className="container-fluid">
                 <h1>Shopping Cart</h1>
@@ -44,6 +50,18 @@ export default class ShoppingCart extends Component {
             </div>
         );
     }
+
+componentDidMount() {
+    console.log("componentDidMount-shoppingCart");
+}   
+componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate-shoppingCart", prevProps, prevState, 
+    this.props, this.state);
+    if(prevProps.x == this.props.x) {
+        console.log("componentDidUpdate-shoppingCart-same");
+    }
+}
+
     handlerIncrement = (product, maxValue) => {
         const products = [...this.state.products];
         const index = products.indexOf(product);
@@ -55,6 +73,7 @@ export default class ShoppingCart extends Component {
     };
     
     handlerDecrement = (product, minValue) => {
+        
         
         const products = [...this.state.products];
         const index = products.indexOf(product);
@@ -68,8 +87,10 @@ export default class ShoppingCart extends Component {
     handlerDelete = (product) => {
         const products = [...this.state.products];
         const index = products.indexOf(product);
-        products.splice(index, 1);
-        this.setState({ products: products });
+        if(window.confirm("Are you sure you want to delete this product?")){
+            products.splice(index, 1);
+            this.setState({ products: products });
+        }
     }
 }
 

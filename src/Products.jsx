@@ -39,4 +39,7 @@ export default class Products extends React.Component {
             </div>
             </div>);
     }
+    componentWillUnmount(){
+        console.log("componentWillUnmount-Product");
+    }
 }
