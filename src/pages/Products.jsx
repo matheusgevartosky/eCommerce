@@ -35,11 +35,8 @@ export default class Products extends React.Component {
                         </div>
                     <div className="float-right">{this.props.children}</div>
                 </div>
-
             </div>
             </div>);
     }
-    componentWillUnmount(){
-        console.log("componentWillUnmount-Product");
-    }
+    
 }

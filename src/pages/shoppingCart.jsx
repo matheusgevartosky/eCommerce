@@ -2,24 +2,15 @@
 import react, { Component } from "react";
 import Products from "./Products";
 
+
 export default class ShoppingCart extends Component {
     constructor(props) {
         console.log("constructor-shoppingCart");
         super(props);
         this.state = {
-        products: [
-            { id: 1, name: "Product 1", price: 100, quantity: 0 },
-            { id: 2, name: "Product 2", price: 200, quantity: 0 },
-            { id: 3, name: "Product 3", price: 300, quantity: 0 },
-            { id: 4, name: "Product 4", price: 400, quantity: 0 },
-            { id: 5, name: "Product 5", price: 500, quantity: 0 },
-            { id: 6, name: "Product 6", price: 600, quantity: 0 },
-            { id: 7, name: "Product 7", price: 700, quantity: 0 },
-            { id: 8, name: "Product 8", price: 800, quantity: 0 },
-            { id: 9, name: "Product 9", price: 900, quantity: 0 },
-            { id: 10, name: "Product 10", price: 1000, quantity: 0 },
+        products: [    
         ],
-    };
+        };
     }
     
 
@@ -27,7 +18,7 @@ export default class ShoppingCart extends Component {
         console.log("render-shoppingCart");
         return (
             <div className="container-fluid">
-                <h1>Shopping Cart</h1>
+                <h1 className="text-center mt-4 mb-4">Nossos Produtos!</h1>
                 <div className="row">
                     {this.state.products.map((prod) => {
                         return (
@@ -39,9 +30,11 @@ export default class ShoppingCart extends Component {
                                 onDelete={this.handlerDelete}
                             >
                                 <button
-                                    className="btn btn-primary"                                    
+                                    className="btn btn-primary" 
+                                                                       
                                 >
                                     Add to Cart
+                                    
                                 </button>
                             </Products>    
                         );
@@ -51,16 +44,16 @@ export default class ShoppingCart extends Component {
         );
     }
 
-componentDidMount() {
-    console.log("componentDidMount-shoppingCart");
-}   
-componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate-shoppingCart", prevProps, prevState, 
-    this.props, this.state);
-    if(prevProps.x == this.props.x) {
-        console.log("componentDidUpdate-shoppingCart-same");
+    componentDidMount(){
+        const promise = fetch('http://localhost:4000/products', {method: 'GET'});
+        promise.then((response) => {
+            return response.json();
+        }).then((data) => {
+            this.setState({
+                products: data
+            });
+        });
     }
-}
 
     handlerIncrement = (product, maxValue) => {
         const products = [...this.state.products];
@@ -77,7 +70,7 @@ componentDidUpdate(prevProps, prevState) {
         
         const products = [...this.state.products];
         const index = products.indexOf(product);
-        if (products[index].quantity > 0) {
+        if (products[index].quantity > minValue) {
             products[index].quantity --;
             this.setState({ products: products });
         }
@@ -87,7 +80,7 @@ componentDidUpdate(prevProps, prevState) {
     handlerDelete = (product) => {
         const products = [...this.state.products];
         const index = products.indexOf(product);
-        if(window.confirm("Are you sure you want to delete this product?")){
+        if(window.confirm("Voce deseja realmente deletar este produto?")){
             products.splice(index, 1);
             this.setState({ products: products });
         }
